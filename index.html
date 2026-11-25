@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>كم سؤال لك ❤️</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #140f26 0%, #27153b 55%, #0d0a1a 100%);
+      color: #f8fafc;
+      padding: 18px;
+    }
+    .card {
+      width: 100%;
+      max-width: 430px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 24px;
+      padding: 30px 22px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+      text-align: center;
+    }
+    .counter {
+      display: inline-block;
+      font-size: 13px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #e9d5ff;
+      margin-bottom: 16px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 21px;
+      line-height: 1.55;
+    }
+    p.note {
+      margin: 0 0 22px;
+      font-size: 14px;
+      color: #d8b4fe;
+      min-height: 20px;
+    }
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .choice-btn {
+      width: 100%;
+      padding: 13px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.07);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.12s ease, border-color 0.2s ease;
+    }
+    .choice-btn:hover {
+      background: rgba(236, 72, 153, 0.22);
+      border-color: #f472b6;
+      transform: translateY(-1px);
+    }
+    .text-input {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(0, 0, 0, 0.25);
+      color: #fff;
+      font-size: 15px;
+      margin-bottom: 12px;
+      outline: none;
+    }
+    .primary-btn {
+      width: 100%;
+      padding: 14px 18px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .playground {
+      position: relative;
+      width: 100%;
+      height: 140px;
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.18);
+      border: 1px dashed rgba(255, 255, 255, 0.14);
+      overflow: hidden;
+    }
+    #dodgeYes {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 12px 24px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ec4899, #f43f5e);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    #dodgeNo {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: left 0.2s ease, top 0.2s ease, opacity 0.25s ease;
+    }
+    .end-box {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div id="questionView">
+      <div class="counter" id="counterText">سؤال 1 من 10</div>
+      <h1 id="questionText">...</h1>
+      <p class="note" id="noteText"></p>
+      <div id="answerArea"></div>
+    </div>
+
+    <div class="end-box" id="endView">
+      <div style="font-size: 48px; margin-bottom: 10px;">❤️</div>
+      <h1 style="margin-bottom: 10px;">خلصت الأسئلة!</h1>
+      <p id="statusMsg" style="color: #e2e8f0; line-height: 1.75; margin: 0;">
+        Me and you forever ❤️
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const FORMSPREE_URL = "https://formspree.io/f/xnpdlkyv";
+
+    const items = [
+      {
+        type: "choices",
+        question: "ايش هو تاريخ اول شات لنا في السناب بدون غش؟",
+        note: "جاوبي على راحتك",
+        choices: ["22/11/2025", "21/11/2025", "20/11/2025"]
+      },
+      {
+        type: "choices",
+        question: "ايش اكثر شي انا دايما امدحه فيك؟",
+        note: "",
+        choices: ["الأيلاينر", "عيونك", "كل شي فيك"]
+      },
+      {
+        type: "choices",
+        question: "ايش كانت اول منصة تواصلت فيها معك؟",
+        note: "",
+        choices: ["واتساب", "سناب", "أنستقرام"]
+      },
+      {
+        type: "choices",
+        question: "ايش كان افضل يوم لينا سوا؟",
+        note: "",
+        choices: [
+          "طلعت بيت الشاورما",
+          "العرس",
+          "يوم الكندر والجلكسي",
+          "يوم رجعتيني لين منفوحه",
+          "يوم وصلتك لين بيتك بعد هرفي",
+          "يوم جبتي لي الشوكلت",
+          "جميع ماسبق"
+        ]
+      },
+      {
+        type: "choices",
+        question: "وش اكثر شي بيفرحك اذا سويته لك ؟",
+        note: "",
+        choices: ["اجيب لك كندر", "اخذك بيت الشاورما", "اذكرك كل شوي اني احبك"]
+      },
+      {
+        type: "choices",
+        question: "تنصحيني اكمل احاول اصلح العلاقه؟",
+        note: "خليك صريحة",
+        choices: ["اي", "لا انتهى الي بينا",]
+      },
+      {
+        type: "choices",
+        question: "لو قلنا نطلع الحين بدون تخطيط، وين ودك نروح؟",
+        note: "",
+        choices: ["قهوة ومشوار سريع", "أكل ومكان هادي", "أي مكان أهم شي نطلع"]
+      },
+      {
+        type: "choices",
+        question: "وش أكثر شي اسويه ويعجبك أو يرضيك على طول؟",
+        note: "",
+        choices: ["سوالفي وعبطي", "اهتمامي بتفاصيلك", "كل شي مني"]
+      },
+      {
+        type: "text",
+        question: "كلمة أو شي بخاطرك تقولينه لي الحين؟",
+        note: "اكتبي اللي ببالك",
+        placeholder: "اكتبي هنا..."
+      },
+      {
+        type: "dodge",
+        question: "تحبيني؟",
+        note: "جاوبي بصراحة",
+        yesText: "إي طبعاً ❤️",
+        noText: "لا"
+      }
+    ];
+
+    let index = 0;
+    const answers = [];
+
+    const counterText = document.getElementById("counterText");
+    const questionText = document.getElementById("questionText");
+    const noteText = document.getElementById("noteText");
+    const answerArea = document.getElementById("answerArea");
+    const questionView = document.getElementById("questionView");
+    const endView = document.getElementById("endView");
+    const statusMsg = document.getElementById("statusMsg");
+
+    function saveAndNext(answerText) {
+      answers.push({
+        q: items[index].question,
+        a: answerText
+      });
+      index++;
+      if (index < items.length) {
+        renderStep();
+      } else {
+        sendToFormspree();
+      }
+    }
+
+    async function sendToFormspree() {
+      questionView.style.display = "none";
+      endView.style.display = "block";
+      statusMsg.textContent = "جاري إرسال إجاباتك...";
+
+      const formatted = {};
+      answers.forEach((item, i) => {
+        formatted[`سؤال ${i + 1}: ${item.q}`] = item.a;
+      });
+
+      try {
+        const res = await fetch(FORMSPREE_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(formatted)
+        });
+        if (!res.ok) throw new Error("Failed");
+        statusMsg.textContent = "وصلتني إجاباتك يا حلوة ❤️";
+      } catch (err) {
+        statusMsg.textContent = "تم إنهاء الأسئلة ❤️";
+      }
+    }
+
+    function renderStep() {
+      const current = items[index];
+      counterText.textContent = `سؤال ${index + 1} من ${items.length}`;
+      questionText.textContent = current.question;
+      noteText.textContent = current.note || "";
+      answerArea.innerHTML = "";
+
+      if (current.type === "choices") {
+        const wrap = document.createElement("div");
+        wrap.className = "choices";
+        current.choices.forEach((label) => {
+          const btn = document.createElement("button");
+          btn.className = "choice-btn";
+          btn.textContent = label;
+          btn.addEventListener("click", () => saveAndNext(label));
+          wrap.appendChild(btn);
+        });
+        answerArea.appendChild(wrap);
+      } else if (current.type === "text") {
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className = "text-input";
+        input.placeholder = current.placeholder || "اكتبي إجابتك...";
+
+        const btn = document.createElement("button");
+        btn.className = "primary-btn";
+        btn.textContent = "التالي";
+        btn.addEventListener("click", () => {
+          const val = input.value.trim();
+          saveAndNext(val || "ما كتبت شي 🙈");
+        });
+
+        answerArea.appendChild(input);
+        answerArea.appendChild(btn);
+      } else if (current.type === "dodge") {
+        const box = document.createElement("div");
+        box.className = "playground";
+
+        const yesBtn = document.createElement("button");
+        yesBtn.id = "dodgeYes";
+        yesBtn.textContent = current.yesText;
+        yesBtn.addEventListener("click", () => saveAndNext(current.yesText));
+
+        const noBtn = document.createElement("button");
+        noBtn.id = "dodgeNo";
+        noBtn.textContent = current.noText;
+
+        const phrases = ["متأكدة؟", "حاولي مرة ثانية", "لا مو كذا", "ممنوع", "ماينفع معك الا كذا"];
+        let tries = 0;
+
+        function dodge() {
+          if (tries >= phrases.length) return;
+          noBtn.textContent = phrases[tries];
+          tries++;
+
+          if (tries >= phrases.length) {
+            noBtn.style.pointerEvents = "none";
+            setTimeout(() => {
+              noBtn.style.opacity = "0";
+              setTimeout(() => (noBtn.style.display = "none"), 250);
+            }, 500);
+            return;
+          }
+
+          const maxX = Math.max(10, box.clientWidth - noBtn.offsetWidth - 12);
+          const maxY = Math.max(10, box.clientHeight - noBtn.offsetHeight - 12);
+          noBtn.style.left = Math.floor(10 + Math.random() * maxX) + "px";
+          noBtn.style.top = Math.floor(10 + Math.random() * maxY) + "px";
+        }
+
+        noBtn.addEventListener("mouseenter", dodge);
+        noBtn.addEventListener("touchstart", (e) => {
+          e.preventDefault();
+          dodge();
+        }, { passive: false });
+
+        box.appendChild(yesBtn);
+        box.appendChild(noBtn);
+        answerArea.appendChild(box);
+      }
+    }
+
+    renderStep();
+  </script>
+</body>
+</html>
